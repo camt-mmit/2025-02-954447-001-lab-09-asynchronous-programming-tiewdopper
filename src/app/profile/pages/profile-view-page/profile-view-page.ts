@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject, resource } from '@angular/core';
-import { ProfileView } from '../../components/profile-view/profile-view';
 import { ProfileDataStorage } from '../../services/profile-data.storage';
+import { ProfileView } from '../../components/profile-view/profile-view';
 
 @Component({
   selector: 'app-profile-view-page',
@@ -11,7 +11,6 @@ import { ProfileDataStorage } from '../../services/profile-data.storage';
 })
 export class ProfileViewPage {
   private readonly dataStorage = inject(ProfileDataStorage);
-
   protected readonly dataResource = resource({
     loader: async () => await this.dataStorage.get(),
   });

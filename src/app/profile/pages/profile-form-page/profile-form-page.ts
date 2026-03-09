@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, effect, inject, resource } from '@angular/core';
-import { ProfileForm } from '../../components/profile-form/profile-form';
 import { createProfile } from '../../helpers';
+import { ProfileForm } from '../../components/profile-form/profile-form';
 import { ProfileDataStorage } from '../../services/profile-data.storage';
 
 @Component({
@@ -12,15 +12,14 @@ import { ProfileDataStorage } from '../../services/profile-data.storage';
 })
 export class ProfileFormPage {
   private readonly dataStorage = inject(ProfileDataStorage);
-
   protected readonly dataResource = resource({
     loader: async () => (await this.dataStorage.get()) ?? createProfile(),
   });
 
   constructor() {
-    effect(() => {
+    effect(async () => {
       if (this.dataResource.hasValue()) {
-        this.dataStorage.set(this.dataResource.value());
+        await this.dataStorage.set(this.dataResource.value());
       }
     });
   }
